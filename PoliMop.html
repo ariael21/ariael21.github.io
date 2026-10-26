@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="PoliMop: Policy-in-the-Loop Motion Planning in 3D Spaces for Mobile Robots. A research project from the Computational Robotics Lab at ETH Zurich.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PoliMop — Policy-in-the-Loop Motion Planning">
+  <meta property="og:description" content="Planning with the capabilities of the robot, its control policy, and a changing 3D environment.">
+  <meta property="og:image" content="assets/images/video-poster.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>PoliMop | Policy-in-the-Loop Motion Planning</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="wordmark" href="#top" aria-label="PoliMop, back to top">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 26 13 18 10 7M13 18 23 15 27 5M23 15 27 26"/><circle cx="5" cy="26" r="3"/><circle cx="10" cy="7" r="3"/><circle cx="27" cy="5" r="3"/><circle cx="27" cy="26" r="3"/><circle cx="13" cy="18" r="2.5"/><circle cx="23" cy="15" r="2.5"/></svg>
+        PoliMop
+      </a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#experiments">Experiments</a>
+        <a href="#resources">Resources</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero container" id="top" aria-labelledby="project-title">
+      <h1 id="project-title"><span class="project-name">PoliMop</span><span class="project-title">Policy-in-the-Loop Motion Planning<br class="desktop-break"> in 3D Spaces for Mobile Robots</span></h1>
+      <p class="authors"><span>Yael Fassbind</span><a href="https://vhartmann.com/">Valentin Hartmann</a><span>Huang Su</span><a href="https://yijiangh.github.io/">Yijiang Huang</a><a href="https://crl.ethz.ch/people/coros/index.html">Stelian Coros</a></p>
+      <p class="affiliation">Computational Robotics Lab, ETH Zurich, Switzerland</p>
+      <div class="resource-links" aria-label="Project resources">
+        <a class="button button-primary" href="paper.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8zM14 3v5h5M8 13h8M8 17h6"/></svg>Paper <span class="button-detail">PDF</span>
+        </a>
+        <a class="button" href="#video"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7z"/></svg>Watch video</a>
+        <span class="button button-unavailable" title="The code release is not yet available"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>Code <span class="button-detail">coming soon</span></span>
+      </div>
+
+      <div class="section-heading hero-overview-heading">
+        <h2 id="hero-overview-title"><span>Plan with what a robot <em>can do</em>.</span></h2>
+        <!-- <p>
+          PoliMop combines sampling-based search, control policies, and physics simulation to plan feasible motions for several different robot types such as quadrupeds, humanoids, and wheeled robots.
+        </p> -->
+        <p>
+          PoliMop finds paths that reflect the physical and control-policy capabilities of the selected robot–policy combination. By evaluating motions through policy rollouts in physics simulation, it discovers routes the robot can execute without changing the underlying planning algorithm.
+        </p>
+      </div>
+      <figure class="paper-figure overview-figure" aria-labelledby="hero-overview-title">
+        <a class="figure-link" href="assets/images/overview.webp" target="_blank" rel="noopener" aria-label="Enlarge the three robot demonstrations">
+          <img src="assets/images/overview.webp" alt="A quadruped navigating a low passage, a humanoid climbing stairs, and a wheeled robot traversing a multilevel scaffold with narrow ramps. Each scene is shown above a close-up of the robot." width="1700" height="1190" fetchpriority="high">
+        </a>
+        <figcaption>Our policy-in-the-loop motion planner enables diverse robots to traverse challenging environments. A quadruped (left), humanoid (center), and wheeled robot (right) navigate low passages, stairs, and narrow scaffold ramps.</figcaption>
+      </figure>
+      <!-- <div class="robot-labels" aria-label="Demonstrated robot types">
+        <div><h3>Quadruped</h3></div>
+        <div><h3>Humanoid</h3></div>
+        <div><h3>Wheeled robot</h3></div>
+      </div> -->
+    </section>
+
+    <section class="section section-soft" id="overview" aria-labelledby="abstract-title">
+      <div class="container narrow">
+        <p class="eyebrow">Overview</p>
+        <h2 id="abstract-title">Abstract</h2>
+        <div class="abstract">
+          <p>Reaching a goal state in a complex environment often requires a robot to overcome challenging terrain and obstacles. Which routes are accessible depends on the robot’s physical design, the control policy it uses, and how it modifies its surroundings. We present a kinodynamic rapidly-exploring random tree (RRT) planner that uses physics simulation to exploit skills encoded in the control policy, which allows it to find a path in the scene with respect to the robot’s capabilities. The planner samples states from a reduced state space in 3D around the scene and expands the RRT toward each sample using policy rollouts. We guide sampling with a preplanned path for a simple mass-point model to focus exploration on promising regions leading toward the goal state, reducing planning time by up to 63%.</p>
+          <p>Simulation experiments with quadrupeds, humanoids, and wheeled robots demonstrate that our approach supports drop-in integration of various robots and control policies, exploiting their physical and policy capabilities without modifying the underlying planning algorithm. Predefined environmental modifications, such as placing a plank across a gap to build a bridge, will automatically be picked up by the planner as the robot’s reachable space expands.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="video" aria-labelledby="video-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">PoliMop in motion</p>
+          <h2 id="video-title">Project video</h2>
+        </div>
+        <figure class="video-feature">
+          <div class="video-frame">
+            <video id="project-video" class="project-video" controls playsinline preload="none" poster="assets/images/video-poster.jpg" width="1920" height="1080" aria-label="PoliMop project video: method and simulation demonstrations" aria-describedby="video-caption">
+              <source src="PoliMop.mp4" type="video/mp4">
+              Your browser does not support embedded video. <a href="PoliMop.mp4">Download the project video</a>.
+            </video>
+          </div>
+          <figcaption id="video-caption"><span>Policy-in-the-loop planning, from the search process to navigation in complex 3D scenes.</span><span class="video-duration" aria-label="Duration: 2 minutes, 59 seconds">2:59</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="method" aria-labelledby="method-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">The method</p>
+          <h2 id="method-title">Put the policy inside the planning loop.</h2>
+          <!-- <p>A motion is added to the search tree only after it has been tested through a physics rollout.</p> -->
+        </div>
+        <ol class="method-steps">
+          <li><span class="step-number">01</span><h3>Sample a state</h3><p>Sample a reduced state in 3D space around the scene. The reduced state consists of 3D position, linear velocity, and heading angle.</p></li>
+          <li><span class="step-number">02</span><h3>Restore a state</h3><p>Select the RRT tree node closest to the sample and restore its complete simulation state.</p></li>
+          <li><span class="step-number">03</span><h3>Roll out the policy</h3><p>Using a high-level controller and a control policy, we roll out a motion that moves the robot toward the sampled state.</p></li>
+          <li><span class="step-number">04</span><h3>Grow the tree</h3><p>Keep the motion if it satisfies the validity constraints. Repeat until the goal is reached.</p></li>
+        </ol>
+        <div class="feature-row">
+          <div class="feature-copy">
+            <h3>Path-guided sampling for faster planning</h3>
+            <p>Unguided exploration can spend time in regions that do not lead toward the goal, generating unnecessary rollouts. To focus exploration and reduce planning time, PoliMop uses a path-guided sampling strategy.</p>
+            <p>A simplified mass-point model first computes a guide path. PoliMop samples from its unreached waypoints to concentrate exploration on promising regions, while retaining global sampling so the search can deviate from the guide.</p>
+            <p>Rollouts of the actual robot and its control policy determine which motions are feasible.</p>
+          </div>
+          <figure class="paper-figure guidance-figure">
+            <div class="figure-labels"><span>Unguided</span><span>Path-guided</span></div>
+            <a class="figure-link" href="assets/images/path-guidance.webp" target="_blank" rel="noopener" aria-label="Enlarge the path-guided sampling comparison">
+              <img src="assets/images/path-guidance.webp" alt="Two search trees for a wheeled robot: unguided sampling explores broadly, while guided sampling follows a shorter corridor toward the goal." width="627" height="354" loading="lazy">
+            </a>
+            <figcaption>Path guidance concentrates the search. Figure 2 from the paper.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experiments" aria-label="Experiments in simulation">
+      <div class="container">
+        <div class="experiment">
+          <div class="experiment-heading"><span class="experiment-index">01 / Capabilities</span><h3>The route depends on the robot and its policy.</h3></div>
+          <p class="experiment-intro">In the same scene, a wheeled robot takes the longer route via a ramp, while a humanoid can reach the platform directly by climbing the stairs. These capabilities emerge from the simulated rollouts.</p>
+          <figure class="paper-figure">
+            <a class="figure-link" href="assets/images/policy-comparison.webp" target="_blank" rel="noopener" aria-label="Enlarge the wheeled and humanoid route comparison">
+              <img src="assets/images/policy-comparison.webp" alt="Side-by-side routes to an elevated platform: the wheeled robot uses the ramp on the left; the humanoid climbs stairs on the right." width="1700" height="680" loading="lazy">
+            </a>
+            <figcaption>Different feasible routes to the same goal. Figure 4 from the paper.</figcaption>
+          </figure>
+        </div>
+
+        <div class="experiment">
+          <div class="experiment-heading"><span class="experiment-index">02 / Changing environments</span><h3>New routes emerge as the environment changes.</h3></div>
+          <p class="experiment-intro">A prescribed task sequence places a plank across a gap. The changed environment persists in the simulator, allowing the next motion-planning task to discover the newly reachable region.</p>
+          <figure class="paper-figure">
+            <a class="figure-link" href="assets/images/environment-modification.webp" target="_blank" rel="noopener" aria-label="Enlarge the bridge-building demonstration">
+              <img src="assets/images/environment-modification.webp" alt="A humanoid transports a plank in a construction-site simulation and crosses the gap after the plank has been placed as a bridge." width="1696" height="636" loading="lazy">
+            </a>
+            <figcaption>A supplied sequence of navigation, pick-up, and placement tasks. Figure 3 from the paper.</figcaption>
+          </figure>
+          <ol class="task-sequence" aria-label="Prescribed task sequence"><li>Move to plank</li><li>Pick up</li><li>Move to gap</li><li>Place plank</li><li>Move to goal</li></ol>
+          <p class="scope-note">The task order and placement are supplied in advance. PoliMop plans the motions within this sequence; it does not generate the manipulation strategy.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="section section-soft" id="results" aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Evaluation</p>
+          <h2 id="results-title">Focused exploration. Faster planning.</h2>
+          <p>Path guidance reduces search time while improving success in the evaluated scenes.</p>
+        </div>
+        <div class="metrics">
+          <div><strong>63<span>%</span></strong><h3>less planning time</h3><p>Mean total time, including preplanning, compared with unguided search.</p></div>
+          <div><strong>99.7<span>%</span></strong><h3>success with guidance</h3><p>Across 660 motion-planning problems per configuration in the guidance study.</p></div>
+          <div><strong>830<span>/830</span></strong><h3>tasks completed</h3><p>In a separate general-planning study with tuned robot-specific configurations.</p></div>
+        </div>
+        <div class="results-detail">
+          <div class="timing-chart" role="img" aria-label="Mean total planning time: unguided 92.4 seconds; path-guided 33.8 seconds, comprising 27.5 seconds of planning and 6.3 seconds of preplanning.">
+            <h3>Mean total planning time</h3>
+            <div class="bar-label"><span>Unguided</span><strong>92.4 s</strong></div>
+            <div class="bar-track"><div class="bar bar-unguided"></div></div>
+            <div class="bar-label"><span>Path-guided</span><strong>33.8 s</strong></div>
+            <div class="bar-track"><div class="bar bar-guided"><span class="preplanning"></span></div></div>
+            <p class="chart-key"><span></span>Planning <span></span>Mass-point preplanning</p>
+          </div>
+          <div class="results-table-wrap">
+            <table>
+              <caption>General-planning evaluation</caption>
+              <thead><tr><th scope="col">Scene type</th><th scope="col">Completed</th></tr></thead>
+              <tbody><tr><th scope="row">Obstacle navigation</th><td>280 / 280</td></tr><tr><th scope="row">Elevation changes</th><td>310 / 310</td></tr><tr><th scope="row">Mazes</th><td>120 / 120</td></tr><tr><th scope="row">Planar baseline</th><td>120 / 120</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="scene-timings">
+          <div class="scene-timings-heading">
+            <p class="eyebrow">Representative scenes</p>
+            <h3>Planning time depends on the scene and robot-policy pair.</h3>
+            <p>Mean wall-clock planning time with standard deviation. Every listed task plan completed successfully.</p>
+          </div>
+          <div class="scene-timing-table-wrap">
+            <table class="scene-timing-table">
+              <caption class="sr-only">Task-plan completion and planning times for representative scenes</caption>
+              <thead><tr><th scope="col">Scene</th><th scope="col">Robot-policy pair</th><th scope="col">Completed</th><th scope="col">Time [s]</th></tr></thead>
+              <tbody>
+                <tr><th scope="rowgroup" rowspan="2">Construction site</th><td>G1 hiking</td><td>10 / 10</td><td>41.1 ± 57.7</td></tr>
+                <tr><td>Go2 parkour</td><td>10 / 10</td><td>132.4 ± 323.2</td></tr>
+                <tr><th scope="rowgroup" rowspan="2">Living room</th><td>G1 hiking</td><td>10 / 10</td><td>11.3 ± 18.9</td></tr>
+                <tr><td>Go2 parkour</td><td>10 / 10</td><td>163.0 ± 150.3</td></tr>
+                <tr><th scope="rowgroup" rowspan="3">Small spiral ramp</th><td>Car</td><td>10 / 10</td><td>25.5 ± 21.8</td></tr>
+                <tr><td>G1 hiking</td><td>10 / 10</td><td>92.9 ± 110.3</td></tr>
+                <tr><td>Go2 parkour</td><td>10 / 10</td><td>23.0 ± 19.3</td></tr>
+                <tr><th scope="rowgroup" rowspan="3">Labyrinth</th><td>Car</td><td>10 / 10</td><td>10.2 ± 6.1</td></tr>
+                <tr><td>G1 hiking</td><td>10 / 10</td><td>2.6 ± 0.4</td></tr>
+                <tr><td>Go2 parkour</td><td>10 / 10</td><td>55.4 ± 43.3</td></tr>
+                <tr><th scope="rowgroup" rowspan="3">Flat baseline</th><td>Car</td><td>20 / 20</td><td>5.3 ± 3.0</td></tr>
+                <tr><td>G1 hiking</td><td>20 / 20</td><td>2.1 ± 0.8</td></tr>
+                <tr><td>Go2 parkour</td><td>20 / 20</td><td>6.4 ± 2.3</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="scene-timings-note">The construction-site task plan contains three motion-planning tasks; every other listed task plan contains one. Times are summed across the motion-planning tasks in each successful plan.</p>
+        </div>
+        <p class="results-note">Results from simulation, with a budget of 30,000 RRT iterations per motion-planning task. Timing comparison: paper Table I; task completion: Table II; representative scene times: Table III. The mean total time falls from 92.4 s to 33.8 s (27.5 s planning + 6.3 s preplanning), a reduction of approximately 63.4%.</p>
+        <details class="limitations">
+          <summary>Assumptions and current limitations</summary>
+          <p>The environment is fully observable and the task plan is provided. Robot-specific controller interfaces and parameter tuning are still needed. Each robot uses one policy, and the method seeks feasible rather than optimal solutions. The reported experiments validate motions in physics simulation; physical-robot transfer and automatic task-plan generation are future work.</p>
+        </details>
+      </div>
+    </section> -->
+
+    <section class="section" id="resources" aria-labelledby="resources-title">
+      <div class="container narrow">
+        <div class="section-heading"><p class="eyebrow">Explore the work</p><h2 id="resources-title">Paper &amp; resources</h2></div>
+        <a class="paper-download" href="paper.pdf" target="_blank" rel="noopener">
+          <span class="pdf-badge">PDF</span><span><strong>Read the full paper</strong><span>Method, experiments, and discussion · 8 pages</span></span><span class="download-arrow" aria-hidden="true">↗</span>
+        </a>
+        <p class="code-status"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg><strong>Code coming soon</strong><span>The implementation will be linked here when available.</span></p>
+        <div class="citation-heading"><h3>Citation</h3><button class="copy-button" id="copy-citation" type="button" hidden>Copy BibTeX</button></div>
+        <pre class="citation"><code id="bibtex">@misc{fassbind_polimop,
+  title = {{PoliMop}: Policy-in-the-Loop Motion Planning in 3D Spaces for Mobile Robots},
+  author = {Fassbind, Yael and Hartmann, Valentin N. and Su, Huang and Huang, Yijiang and Coros, Stelian}
+}</code></pre>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div><a class="footer-brand" href="#top">PoliMop <span aria-hidden="true">↑</span></a><p>Computational Robotics Lab · ETH Zurich</p></div>
+      <p>Design inspired by <a href="https://yijiangh.github.io/robot-friendly-scaffolding/">Robot-Friendly Scaffolding</a><br>and <a href="https://vhartmann.com/wrap.html">WRAP</a>. Research and media by the project authors.</p>
+    </div>
+  </footer>
+</body>
+</html>
